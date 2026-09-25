@@ -41,4 +41,43 @@ public class ArbolInventario {
 
     // ================== RECORRIDO INORDEN ==================
 
+        // metodo publico: muestra el inventario ordenado por id (de menor a mayor)
+    public void mostrarInorden() {
+        mostrarInordenRecursivo(raiz);
+    }
+
+    // metodo privado: primero va a la izquierda, luego muestra el nodo,
+    // y despues va a la derecha. asi queda todo ordenado
+    private void mostrarInordenRecursivo(Producto nodo) {
+        if (nodo != null) {
+            mostrarInordenRecursivo(nodo.getIzquierdo());
+            System.out.println("ID: " + nodo.getId() + " | Nombre: " + nodo.getNombre());
+            mostrarInordenRecursivo(nodo.getDerecho());
+        }
+    }
+
+    // ================== BUSCAR ==================
+
+    // metodo publico: dice si un id existe en el inventario
+    public boolean buscar(int id) {
+        return buscarRecursivo(raiz, id);
+    }
+
+    // metodo privado: baja por el arbol comparando el id en cada nodo
+    private boolean buscarRecursivo(Producto actual, int id) {
+        // caso base: se acabo la rama y no lo encontro
+        if (actual == null) {
+            return false;
+        }
+        // caso base: este es el nodo que buscamos
+        if (id == actual.getId()) {
+            return true;
+        }
+        // si es menor, sigue por la izquierda; si no, por la derecha
+        if (id < actual.getId()) {
+            return buscarRecursivo(actual.getIzquierdo(), id);
+        } else {
+            return buscarRecursivo(actual.getDerecho(), id);
+        }
+    }
 }
